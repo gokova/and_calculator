@@ -67,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="x^y" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -105,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="÷" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -143,7 +141,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="x" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -181,7 +178,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="-" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -219,9 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:text="+" />
-
         </LinearLayout>
-
     </LinearLayout>
 
 </RelativeLayout>
