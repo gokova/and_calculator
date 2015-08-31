@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import dev.gokova.calculator.Calculator;
 import dev.gokova.calculator.Operator;
 
 public class CalculatorActivity extends Activity {
@@ -101,6 +102,10 @@ public class CalculatorActivity extends Activity {
 		btnMultiply.setOnClickListener(onTwoOperandClickListener);
 		btnDivide.setOnClickListener(onTwoOperandClickListener);
 		btnPower.setOnClickListener(onTwoOperandClickListener);
+		btnEqual.setOnClickListener(onEqualsClickListener);
+		btnFactorial.setOnClickListener(onOneOperandClickListener);
+		btnSqrRoot.setOnClickListener(onOneOperandClickListener);
+		btnSquare.setOnClickListener(onOneOperandClickListener);
 	}
 
 	@Override
@@ -117,7 +122,7 @@ public class CalculatorActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_clear) {
-			calcScreen.setText("0");
+			InitValues();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -126,8 +131,14 @@ public class CalculatorActivity extends Activity {
 	private OnClickListener onNumberClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			if (calcScreen.getText().toString().equals("0")) {
+			if (calcScreen.getText().toString().equals("0")
+					|| (getOperator() != null && getOperator().equals(
+							Operator.EQUALS))) {
 				calcScreen.setText(((Button) v).getText());
+				if ((getOperator() != null && getOperator().equals(
+						Operator.EQUALS))) {
+					setOperator(null);
+				}
 			} else {
 				calcScreen.setText(calcScreen.getText() + ""
 						+ ((Button) v).getText());
@@ -144,12 +155,81 @@ public class CalculatorActivity extends Activity {
 			}
 		}
 	};
-	
+
+	private OnClickListener onEqualsClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (getOperator() != null && !getOperator().equals(Operator.EQUALS)) {
+				calcScreen.setText(CalculateTwoOperand().toString());
+				setOperator(Operator.EQUALS);
+			}
+		}
+	};
+
 	private OnClickListener onTwoOperandClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// TODO Code the logic behind add, subtract, multiply and divide buttons
-			
+			if (getOperator() == null || getOperator().equals(Operator.EQUALS)) {
+				GetFirstOperand(((Button) v).getId());
+			} else {
+				calcScreen.setText(CalculateTwoOperand().toString());
+				GetFirstOperand(((Button) v).getId());
+			}
 		}
 	};
+
+	private void GetFirstOperand(int id) {
+		setOperand1(Double.parseDouble(calcScreen.getText().toString()));
+		calcScreen.setText("0");
+		switch (id) {
+		case R.id.button20:
+			setOperator(Operator.ADD);
+			break;
+		case R.id.button16:
+			setOperator(Operator.SUBTRACT);
+			break;
+		case R.id.button12:
+			setOperator(Operator.MULTIPLY);
+			break;
+		case R.id.button8:
+			setOperator(Operator.DIVIDE);
+			break;
+		case R.id.button1:
+			setOperator(Operator.FACTORIAL);
+			break;
+		case R.id.button2:
+			setOperator(Operator.SQUAREROOT);
+			break;
+		case R.id.button3:
+			setOperator(Operator.SQUARE);
+			break;
+		case R.id.button4:
+			setOperator(Operator.POWER);
+			break;
+		default:
+			break;
+		}
+	}
+
+	private Double CalculateTwoOperand() {
+		setOperand2(Double.parseDouble(calcScreen.getText().toString()));
+		Double result = Calculator.calculate(getOperand1(), getOperand2(),
+				getOperator());
+		return result;
+	}
+
+	private OnClickListener onOneOperandClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			GetFirstOperand(((Button) v).getId());
+			calcScreen.setText(CalculateOneOperand().toString());
+			setOperator(Operator.EQUALS);
+		}
+	};
+
+	private Double CalculateOneOperand() {
+		setOperand2(null);
+		Double result = Calculator.calculate(getOperand1(), getOperator());
+		return result;
+	}
 }

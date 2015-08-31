@@ -71,7 +71,7 @@ public abstract class Calculator {
 		} else {
 			Double result = (double) 1;
 			for (int i = 2; i <= operand; i++) {
-				result *= operand;
+				result *= i;
 			}
 			return result;
 		}
