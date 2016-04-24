@@ -16,33 +16,33 @@ public class CalculatorActivity extends Activity {
 	private static Double operand2;
 	private static Operator operator;
 
-	public static Double getOperand1() {
+	private static Double getOperand1() {
 		return operand1;
 	}
 
-	public static void setOperand1(Double operand1) {
+	private static void setOperand1(Double operand1) {
 		CalculatorActivity.operand1 = operand1;
 	}
 
-	public static Double getOperand2() {
+	private static Double getOperand2() {
 		return operand2;
 	}
 
-	public static void setOperand2(Double operand2) {
+	private static void setOperand2(Double operand2) {
 		CalculatorActivity.operand2 = operand2;
 	}
 
-	public static Operator getOperator() {
+	private static Operator getOperator() {
 		return operator;
 	}
 
-	public static void setOperator(Operator operator) {
+	private static void setOperator(Operator operator) {
 		CalculatorActivity.operator = operator;
 	}
 
-	EditText calcScreen;
-	Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-	Button btnPoint, btnEqual, btnAdd, btnSubtract, btnMultiply, btnDivide,
+	private EditText calcScreen;
+	private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+	private Button btnPoint, btnEqual, btnAdd, btnSubtract, btnMultiply, btnDivide,
 			btnFactorial, btnSqrRoot, btnSquare, btnPower;
 
 	@Override
@@ -128,7 +128,7 @@ public class CalculatorActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private OnClickListener onNumberClickListener = new OnClickListener() {
+	private final OnClickListener onNumberClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (calcScreen.getText().toString().equals("0")
@@ -140,40 +140,40 @@ public class CalculatorActivity extends Activity {
 					setOperator(null);
 				}
 			} else {
-				calcScreen.setText(calcScreen.getText() + ""
-						+ ((Button) v).getText());
+				String result = calcScreen.getText().toString() + ((Button) v).getText().toString();
+				calcScreen.setText(result);
 			}
 		}
 	};
 
-	private OnClickListener onPointClickListener = new OnClickListener() {
+	private final OnClickListener onPointClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (!calcScreen.getText().toString().contains(".")) {
-				calcScreen.setText(calcScreen.getText() + ""
-						+ ((Button) v).getText());
+				String result = calcScreen.getText().toString() + ((Button) v).getText().toString();
+				calcScreen.setText(result);
 			}
 		}
 	};
 
-	private OnClickListener onEqualsClickListener = new OnClickListener() {
+	private final OnClickListener onEqualsClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (getOperator() != null && !getOperator().equals(Operator.EQUALS)) {
-				calcScreen.setText(CalculateTwoOperand().toString());
+				calcScreen.setText(String.valueOf(CalculateTwoOperand()));
 				setOperator(Operator.EQUALS);
 			}
 		}
 	};
 
-	private OnClickListener onTwoOperandClickListener = new OnClickListener() {
+	private final OnClickListener onTwoOperandClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if (getOperator() == null || getOperator().equals(Operator.EQUALS)) {
-				GetFirstOperand(((Button) v).getId());
+				GetFirstOperand(v.getId());
 			} else {
-				calcScreen.setText(CalculateTwoOperand().toString());
-				GetFirstOperand(((Button) v).getId());
+				calcScreen.setText(String.valueOf(CalculateTwoOperand()));
+				GetFirstOperand(v.getId());
 			}
 		}
 	};
@@ -213,23 +213,20 @@ public class CalculatorActivity extends Activity {
 
 	private Double CalculateTwoOperand() {
 		setOperand2(Double.parseDouble(calcScreen.getText().toString()));
-		Double result = Calculator.calculate(getOperand1(), getOperand2(),
-				getOperator());
-		return result;
+		return Calculator.calculate(getOperand1(), getOperand2(), getOperator());
 	}
 
-	private OnClickListener onOneOperandClickListener = new OnClickListener() {
+	private final OnClickListener onOneOperandClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			GetFirstOperand(((Button) v).getId());
-			calcScreen.setText(CalculateOneOperand().toString());
+			GetFirstOperand(v.getId());
+			calcScreen.setText(String.valueOf(CalculateOneOperand()));
 			setOperator(Operator.EQUALS);
 		}
 	};
 
 	private Double CalculateOneOperand() {
 		setOperand2(null);
-		Double result = Calculator.calculate(getOperand1(), getOperator());
-		return result;
+		return Calculator.calculate(getOperand1(), getOperator());
 	}
 }

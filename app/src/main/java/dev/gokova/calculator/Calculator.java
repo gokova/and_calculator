@@ -4,7 +4,7 @@ public abstract class Calculator {
 
 	public static Double calculate(Double operand1, Double operand2,
 			Operator operator) {
-		Double result = (double) 0;
+		Double result;
 		switch (operator) {
 		case ADD:
 			result = Add(operand1, operand2);
@@ -22,14 +22,14 @@ public abstract class Calculator {
 			result = Power(operand1, operand2);
 			break;
 		default:
-			result = null;
+			result = (double) 0;
 			break;
 		}
 		return result;
 	}
 
 	public static Double calculate(Double operand, Operator operator) {
-		Double result = (double) 0;
+		Double result;
 		switch (operator) {
 		case FACTORIAL:
 			result = Factorial(operand);
@@ -41,7 +41,7 @@ public abstract class Calculator {
 			result = Square(operand);
 			break;
 		default:
-			result = null;
+			result = (double) 0;
 			break;
 		}
 		return result;
@@ -64,9 +64,9 @@ public abstract class Calculator {
 	}
 
 	private static Double Factorial(Double operand) {
-		if (operand.equals(0)) {
+		if (operand.equals((double) 0)) {
 			return (double) 1;
-		} else if (operand.equals(2)) {
+		} else if (operand.equals((double) 2)) {
 			return (double) 1;
 		} else {
 			Double result = (double) 1;

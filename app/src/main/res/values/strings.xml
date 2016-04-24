@@ -3,5 +3,25 @@
 
     <string name="app_name">Calculator</string>
     <string name="action_clear">Clear</string>
+    <string name="operator_square">x²</string>
+    <string name="operator_power">x^y</string>
+    <string name="operator_squareroot">√</string>
+    <string name="operator_factorial">x!</string>
+    <string name="operator_plus">+</string>
+    <string name="operator_minus">-</string>
+    <string name="operator_multiply">x</string>
+    <string name="operator_divide">÷</string>
+    <string name="operator_point">.</string>
+    <string name="operator_equals">=</string>
+    <string name="number_0">0</string>
+    <string name="number_1">1</string>
+    <string name="number_2">2</string>
+    <string name="number_3">3</string>
+    <string name="number_4">4</string>
+    <string name="number_5">5</string>
+    <string name="number_6">6</string>
+    <string name="number_7">7</string>
+    <string name="number_8">8</string>
+    <string name="number_9">9</string>
 
 </resources>
